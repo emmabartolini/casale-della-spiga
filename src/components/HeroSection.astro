@@ -1,0 +1,141 @@
+---
+---
+
+<section class="hero">
+  <!-- Placeholder stripes — replace with <video> when asset is supplied -->
+  <div class="hero-bg" aria-hidden="true"></div>
+
+  <!-- Gradient overlay -->
+  <div class="hero-overlay" aria-hidden="true"></div>
+
+  <!-- Placeholder label -->
+  <div class="hero-placeholder-label" aria-hidden="true">[ Video — hero reel ]</div>
+
+  <!-- Play button -->
+  <button class="play-btn" id="playBtn" aria-label="Play video">
+    <span class="play-circle">
+      <span class="play-triangle" aria-hidden="true"></span>
+    </span>
+  </button>
+
+  <!-- Copy -->
+  <div class="hero-copy">
+    <p class="hero-eyebrow" data-i18n="heroEyebrow">Emilia Romagna — Italy</p>
+    <p class="hero-sub" data-i18n="heroSub">A historic brick and stone farmhouse in the green heart of Italy</p>
+  </div>
+</section>
+
+<style>
+.hero {
+  position: relative;
+  height: 100vh;
+  min-height: 640px;
+  width: 100%;
+  overflow: hidden;
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    135deg,
+    #3a3128 0, #3a3128 13px,
+    #423930 13px, #423930 26px
+  );
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(22, 17, 12, 0.78) 0%,
+    rgba(22, 17, 12, 0.30) 45%,
+    rgba(22, 17, 12, 0.42) 100%
+  );
+}
+
+.hero-placeholder-label {
+  position: absolute;
+  top: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--label);
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  color: rgba(244, 239, 230, 0.55);
+  text-transform: uppercase;
+  z-index: 5;
+  white-space: nowrap;
+}
+
+/* ── Play button ── */
+.play-btn {
+  position: absolute;
+  top: 46%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 6;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--paper);
+}
+
+.play-circle {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  border: 1px solid rgba(244, 239, 230, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(2px);
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.play-btn:hover .play-circle {
+  border-color: rgba(244, 239, 230, 0.85);
+  background: rgba(244, 239, 230, 0.08);
+}
+
+.play-triangle {
+  width: 0;
+  height: 0;
+  border-left: 20px solid var(--paper);
+  border-top: 12px solid transparent;
+  border-bottom: 12px solid transparent;
+  margin-left: 5px;
+}
+
+/* ── Hero copy ── */
+.hero-copy {
+  position: absolute;
+  left: clamp(20px, 4vw, 48px);
+  bottom: clamp(36px, 6vh, 72px);
+  right: clamp(20px, 4vw, 48px);
+  color: var(--paper);
+  z-index: 6;
+}
+
+.hero-eyebrow {
+  font-family: var(--label);
+  font-size: 12px;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: rgba(244, 239, 230, 0.85);
+  margin-bottom: 20px;
+}
+
+.hero-sub {
+  font-size: clamp(20px, 2.4vw, 30px);
+  line-height: 1.3;
+  max-width: 620px;
+  color: rgba(244, 239, 230, 0.92);
+  font-weight: 300;
+}
+</style>

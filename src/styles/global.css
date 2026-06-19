@@ -1,0 +1,47 @@
+/* ── Font faces ── */
+@font-face { font-family: 'Libre Baskerville'; src: url('/fonts/LibreBaskerville-Regular.otf') format('opentype'); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Libre Baskerville'; src: url('/fonts/LibreBaskerville-Italic.otf') format('opentype'); font-weight: 400; font-style: italic; font-display: swap; }
+@font-face { font-family: 'Libre Baskerville'; src: url('/fonts/LibreBaskerville-Medium.otf') format('opentype'); font-weight: 500; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Libre Baskerville'; src: url('/fonts/LibreBaskerville-MediumItalic.otf') format('opentype'); font-weight: 500; font-style: italic; font-display: swap; }
+@font-face { font-family: 'Libre Baskerville'; src: url('/fonts/LibreBaskerville-SemiBold.otf') format('opentype'); font-weight: 600; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Libre Baskerville'; src: url('/fonts/LibreBaskerville-SemiBoldItalic.otf') format('opentype'); font-weight: 600; font-style: italic; font-display: swap; }
+@font-face { font-family: 'Libre Baskerville'; src: url('/fonts/LibreBaskerville-Bold.otf') format('opentype'); font-weight: 700; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Libre Baskerville'; src: url('/fonts/LibreBaskerville-BoldItalic.otf') format('opentype'); font-weight: 700; font-style: italic; font-display: swap; }
+
+/* ── Tokens ── */
+:root {
+  --paper:   #f4efe6;
+  --ink:     #2b2620;
+  --sand:    #ece4d5;
+  --accent:  #b15c38;
+  --muted:   #7a6f62;
+  --phil:    #5a5046;
+
+  --serif:  'Libre Baskerville', Georgia, serif;
+  --label:  'Roboto', sans-serif;
+}
+
+/* ── Reset ── */
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--serif);
+  overflow-x: hidden;
+}
+::selection { background: var(--accent); color: var(--paper); }
+h1, h2, h3 { margin: 0; font-family: var(--serif); }
+p { margin: 0; }
+button { font-family: inherit; cursor: pointer; }
+input, textarea { font-family: var(--serif); }
+img, video { max-width: 100%; display: block; }
+
+/* ── Eyebrow / label utility ── */
+.eyebrow {
+  font-family: var(--label);
+  font-size: 11px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--accent);
+}

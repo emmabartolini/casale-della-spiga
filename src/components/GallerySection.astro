@@ -1,0 +1,88 @@
+---
+---
+
+<section class="gallery-section">
+  <div class="gallery-header">
+    <div class="gallery-eyebrow eyebrow" data-i18n="galleryEyebrow">Gallery</div>
+  </div>
+
+  <div class="gallery-grid">
+    <!-- Landscape hero image (spans both columns) — replace src with real photo -->
+    <div class="gallery-item gallery-item--wide">
+      <!-- <img src="/images/facade.jpg" alt="Facade" /> -->
+    </div>
+
+    <!-- Portrait images — replace src with real photos -->
+    <div class="gallery-item gallery-item--portrait">
+      <!-- <img src="/images/living-room.jpg" alt="Living room" /> -->
+    </div>
+    <div class="gallery-item gallery-item--portrait">
+      <!-- <img src="/images/kitchen.jpg" alt="Kitchen" /> -->
+    </div>
+    <div class="gallery-item gallery-item--portrait">
+      <!-- <img src="/images/bedroom.jpg" alt="Bedroom" /> -->
+    </div>
+    <div class="gallery-item gallery-item--portrait">
+      <!-- <img src="/images/garden.jpg" alt="Garden" /> -->
+    </div>
+  </div>
+</section>
+
+<style>
+.gallery-section {
+  padding: clamp(80px, 12vh, 140px) clamp(24px, 5vw, 48px);
+  max-width: 1240px;
+  margin: 0 auto;
+}
+
+.gallery-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: flex-end;
+  margin-bottom: 44px;
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+/* Placeholder stripe pattern — remove when real photos are added */
+.gallery-item {
+  background: repeating-linear-gradient(
+    135deg,
+    #e3dac8 0, #e3dac8 11px,
+    #dbd1bd 11px, #dbd1bd 22px
+  );
+  overflow: hidden;
+}
+
+.gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.gallery-item--wide {
+  grid-column: 1 / -1;
+  aspect-ratio: 4 / 3;
+}
+
+.gallery-item--portrait {
+  aspect-ratio: 3 / 4;
+}
+
+/* Stack to single column on narrow phones */
+@media (max-width: 500px) {
+  .gallery-grid {
+    grid-template-columns: 1fr;
+  }
+  .gallery-item--wide,
+  .gallery-item--portrait {
+    grid-column: 1;
+    aspect-ratio: 4 / 3;
+  }
+}
+</style>

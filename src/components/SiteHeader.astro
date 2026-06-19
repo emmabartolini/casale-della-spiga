@@ -1,0 +1,68 @@
+---
+---
+
+<header class="site-header">
+  <div class="brand" data-i18n="brand">Casale della Spiga</div>
+  <nav class="lang-nav" aria-label="Language">
+    <button data-lang-btn="en" class="lang-btn active" aria-label="English">EN</button>
+    <span class="lang-sep" aria-hidden="true">/</span>
+    <button data-lang-btn="it" class="lang-btn" aria-label="Italiano">IT</button>
+  </nav>
+</header>
+
+<style>
+.site-header {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  z-index: 20;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 28px clamp(20px, 4vw, 48px);
+  color: var(--paper);
+}
+
+.brand {
+  font-family: var(--label);
+  font-size: 12px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+}
+
+.lang-nav {
+  display: flex;
+  gap: 18px;
+  align-items: center;
+}
+
+.lang-btn {
+  background: none;
+  border: none;
+  color: var(--paper);
+  font-family: var(--label);
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  padding: 4px 0;
+  opacity: 0.95;
+  position: relative;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+
+.lang-btn.active::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0;
+  bottom: -3px;
+  height: 1px;
+  background: var(--accent);
+}
+
+.lang-sep {
+  font-family: var(--label);
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  opacity: 0.4;
+  color: var(--paper);
+}
+</style>

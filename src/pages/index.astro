@@ -1,0 +1,158 @@
+---
+import SiteHeader from '../components/SiteHeader.astro';
+import HeroSection from '../components/HeroSection.astro';
+import PhilosophySection from '../components/PhilosophySection.astro';
+import SpecsSection from '../components/SpecsSection.astro';
+import GallerySection from '../components/GallerySection.astro';
+import ContactSection from '../components/ContactSection.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import '../styles/global.css';
+
+const priceVisible = true;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Casale della Spiga — Emilia Romagna</title>
+    <meta name="description" content="A historic brick and stone farmhouse for sale in Emilia Romagna, Italy." />
+
+    <!-- Roboto from Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
+  </head>
+
+  <body>
+    <SiteHeader />
+    <main>
+      <HeroSection />
+      <PhilosophySection />
+      <SpecsSection priceVisible={priceVisible} />
+      <GallerySection />
+      <ContactSection />
+    </main>
+    <SiteFooter />
+
+    <script>
+      // ── Translations ──────────────────────────────────────────────────────
+      const TRANSLATIONS: Record<string, Record<string, string>> = {
+        en: {
+          brand:          'Casale della Spiga',
+          heroEyebrow:    'Emilia Romagna — Italy',
+          heroSub:        'A historic brick and stone farmhouse in the green heart of Italy',
+          philHeading:    'A house that guards time and quiet.',
+          philBody:       'Set among olive groves and centuries-old oaks, the farmhouse has watched over its valley for generations. Its stone walls hold the cool of summer and the warmth of the hearth in winter — a house built for slow mornings, long tables, and the quiet that only the countryside knows.',
+          specsEyebrow:   'Information',
+          specRooms:      'Rooms',
+          specBaths:      'Bathrooms',
+          specArea:       'Square meters',
+          specUnits:      'Units',
+          specPrice:      'Price',
+          galleryEyebrow: 'Gallery',
+          contactEyebrow: 'Enquiries',
+          contactHeading: 'Arrange a visit',
+          contactBody:    'Tell us a little about yourself and we\'ll be in touch to plan a private viewing of the estate.',
+          fName:          'Name',
+          fEmail:         'Email',
+          fMsg:           'Message',
+          fSend:          'Send enquiry',
+          sentTitle:      'Thank you',
+          sentBody:       'We\'ve received your message and will reply shortly.',
+          footerBrand:    'Casale della spiga',
+          footerRights:   'All rights reserved',
+        },
+        it: {
+          brand:          'Casale della Spiga',
+          heroEyebrow:    'Emilia Romagna — Italia',
+          heroSub:        'Un casale storico in pietra e mattoni nel cuore verde d\'Italia',
+          philHeading:    'Una casa che custodisce il tempo e il silenzio.',
+          philBody:       'Immerso tra uliveti e querce secolari, il casale veglia sulla sua valle da generazioni. I muri in pietra trattengono il fresco dell\'estate e il calore del focolare d\'inverno — una casa fatta di mattine lente, tavolate lunghe e del silenzio che solo la campagna conosce.',
+          specsEyebrow:   'Informazioni',
+          specRooms:      'Stanze',
+          specBaths:      'Bagni',
+          specArea:       'Metri quadri',
+          specUnits:      'Unità',
+          specPrice:      'Prezzo',
+          galleryEyebrow: 'Galleria',
+          contactEyebrow: 'Contatti',
+          contactHeading: 'Prenota una visita',
+          contactBody:    'Raccontaci qualcosa di te e ti contatteremo per organizzare una visita privata alla tenuta.',
+          fName:          'Nome',
+          fEmail:         'Email',
+          fMsg:           'Messaggio',
+          fSend:          'Invia richiesta',
+          sentTitle:      'Grazie',
+          sentBody:       'Abbiamo ricevuto il tuo messaggio e ti risponderemo a breve.',
+          footerBrand:    'Casale della spiga',
+          footerRights:   'Tutti i diritti riservati',
+        },
+      };
+
+      // ── Language switch ───────────────────────────────────────────────────
+      function applyLang(lang: string) {
+        const dict = TRANSLATIONS[lang] ?? TRANSLATIONS.en;
+
+        // Update all text nodes
+        document.querySelectorAll<HTMLElement>('[data-i18n]').forEach(el => {
+          const key = el.dataset.i18n!;
+          if (dict[key] !== undefined) el.textContent = dict[key];
+        });
+
+        // Update <html lang> attribute
+        document.documentElement.lang = lang;
+
+        // Update active toggle button
+        document.querySelectorAll<HTMLElement>('[data-lang-btn]').forEach(btn => {
+          btn.classList.toggle('active', btn.dataset.langBtn === lang);
+        });
+
+        localStorage.setItem('lang', lang);
+      }
+
+      // Wire up toggle buttons
+      document.querySelectorAll<HTMLButtonElement>('[data-lang-btn]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const lang = btn.dataset.langBtn ?? 'en';
+          applyLang(lang);
+        });
+      });
+
+      // Init: prefer localStorage, then browser locale, then 'en'
+      const saved = localStorage.getItem('lang');
+      const browserLang = navigator.language?.startsWith('it') ? 'it' : 'en';
+      applyLang(saved ?? browserLang);
+
+      // ── Contact form ──────────────────────────────────────────────────────
+      const form    = document.getElementById('contactForm') as HTMLFormElement | null;
+      const success = document.getElementById('contactSuccess') as HTMLElement | null;
+
+      form?.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const nameEl  = form.elements.namedItem('name')  as HTMLInputElement;
+        const emailEl = form.elements.namedItem('email') as HTMLInputElement;
+
+        if (!nameEl.value.trim()) { nameEl.focus(); return; }
+        if (!emailEl.value.trim() || !emailEl.validity.valid) { emailEl.focus(); return; }
+
+        // TODO: replace with real backend call (Formspree, Resend, etc.)
+        // Example: await fetch('https://formspree.io/f/YOUR_ID', { method: 'POST', body: new FormData(form) })
+
+        // Show success state
+        if (form && success) {
+          form.hidden   = true;
+          success.hidden = false;
+        }
+      });
+
+      // ── Play button (no-op placeholder) ──────────────────────────────────
+      document.getElementById('playBtn')?.addEventListener('click', () => {
+        // TODO: wire to hero video — open lightbox or unmute/expand inline video
+      });
+    </script>
+  </body>
+</html>
