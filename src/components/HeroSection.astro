@@ -2,20 +2,41 @@
 ---
 
 <section class="hero">
-  <!-- Placeholder stripes — replace with <video> when asset is supplied -->
+  <!-- Placeholder stripes — visible until video loads -->
   <div class="hero-bg" aria-hidden="true"></div>
+
+  <!--
+    Hero video — drop the file in public/video/hero.mp4 and uncomment:
+
+    <video
+      id="heroVideo"
+      class="hero-video"
+      src="/casale-della-spiga/video/hero.mp4"
+      autoplay
+      muted
+      loop
+      playsinline
+      poster="/casale-della-spiga/video/hero-poster.jpg"
+    ></video>
+  -->
 
   <!-- Gradient overlay -->
   <div class="hero-overlay" aria-hidden="true"></div>
 
-  <!-- Placeholder label -->
-  <div class="hero-placeholder-label" aria-hidden="true">[ Video — hero reel ]</div>
-
-  <!-- Play button -->
-  <button class="play-btn" id="playBtn" aria-label="Play video">
-    <span class="play-circle">
-      <span class="play-triangle" aria-hidden="true"></span>
-    </span>
+  <!-- Mute / unmute button (bottom-right) -->
+  <button class="mute-btn" id="muteBtn" aria-label="Unmute video" aria-pressed="true">
+    <svg class="icon-muted" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <!-- Speaker with X -->
+      <path d="M11 5 6 9H3a1 1 0 0 0-1 1v4a1 1 0 0 0 1 1h3l5 4V5Z"/>
+      <line x1="23" y1="9" x2="17" y2="15"/>
+      <line x1="17" y1="9" x2="23" y2="15"/>
+    </svg>
+    <svg class="icon-unmuted" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <!-- Speaker with waves -->
+      <path d="M11 5 6 9H3a1 1 0 0 0-1 1v4a1 1 0 0 0 1 1h3l5 4V5Z"/>
+      <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
+      <path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
+    </svg>
   </button>
 
   <!-- Copy -->
@@ -24,6 +45,21 @@
     <p class="hero-sub" data-i18n="heroSub">A historic brick and stone farmhouse in the green heart of Italy</p>
   </div>
 </section>
+
+<script>
+  const video   = document.getElementById('heroVideo')   as HTMLVideoElement | null;
+  const muteBtn = document.getElementById('muteBtn')     as HTMLButtonElement | null;
+
+  if (video && muteBtn) {
+    muteBtn.addEventListener('click', () => {
+      video.muted = !video.muted;
+      const isMuted = video.muted;
+      muteBtn.setAttribute('aria-pressed', String(isMuted));
+      muteBtn.setAttribute('aria-label', isMuted ? 'Unmute video' : 'Mute video');
+      muteBtn.classList.toggle('is-muted', isMuted);
+    });
+  }
+</script>
 
 <style>
 .hero {
@@ -44,6 +80,15 @@
   );
 }
 
+/* ── Video ── */
+.hero-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 .hero-overlay {
   position: absolute;
   inset: 0;
@@ -55,69 +100,45 @@
   );
 }
 
-.hero-placeholder-label {
+/* ── Mute button ── */
+.mute-btn {
   position: absolute;
-  top: 24px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-family: var(--label);
-  font-size: 10px;
-  letter-spacing: 0.3em;
-  color: rgba(244, 239, 230, 0.55);
-  text-transform: uppercase;
-  z-index: 5;
-  white-space: nowrap;
-}
-
-/* ── Play button ── */
-.play-btn {
-  position: absolute;
-  top: 46%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  bottom: clamp(36px, 6vh, 72px);
+  right: clamp(20px, 4vw, 48px);
   z-index: 6;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 16px;
   background: none;
-  border: none;
-  cursor: pointer;
-  color: var(--paper);
-}
-
-.play-circle {
-  width: 72px;
-  height: 72px;
+  border: 1px solid rgba(244, 239, 230, 0.35);
+  color: rgba(244, 239, 230, 0.8);
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
-  border: 1px solid rgba(244, 239, 230, 0.55);
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
   backdrop-filter: blur(2px);
-  transition: border-color 0.2s, background 0.2s;
+  transition: border-color 0.2s, color 0.2s;
 }
 
-.play-btn:hover .play-circle {
-  border-color: rgba(244, 239, 230, 0.85);
-  background: rgba(244, 239, 230, 0.08);
+.mute-btn:hover {
+  border-color: rgba(244, 239, 230, 0.75);
+  color: rgba(244, 239, 230, 1);
 }
 
-.play-triangle {
-  width: 0;
-  height: 0;
-  border-left: 20px solid var(--paper);
-  border-top: 12px solid transparent;
-  border-bottom: 12px solid transparent;
-  margin-left: 5px;
-}
+/* default state = muted → show the X-speaker icon */
+.mute-btn .icon-muted  { display: block; }
+.mute-btn .icon-unmuted { display: none; }
+
+/* when video is playing with sound → show the waves icon */
+.mute-btn:not(.is-muted) .icon-muted   { display: none; }
+.mute-btn:not(.is-muted) .icon-unmuted { display: block; }
 
 /* ── Hero copy ── */
 .hero-copy {
   position: absolute;
   left: clamp(20px, 4vw, 48px);
   bottom: clamp(36px, 6vh, 72px);
-  right: clamp(20px, 4vw, 48px);
+  right: calc(clamp(20px, 4vw, 48px) + 56px); /* leaves space for mute btn */
   color: var(--paper);
   z-index: 6;
 }
