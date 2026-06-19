@@ -5,19 +5,25 @@
   <!-- Placeholder stripes — visible until video loads -->
   <div class="hero-bg" aria-hidden="true"></div>
 
-    <video
-      id="heroVideo"
-      class="hero-video"
-      src="/casale-della-spiga/public/video/hero.mp4"
-      autoplay
-      muted
-      loop
-      playsinline
-      poster="/casale-della-spiga/public/video/hero-poster.jpg"
-    ></video>
+  <video
+    id="heroVideo"
+    class="hero-video"
+    src="/casale-della-spiga/video/hero.mp4"
+    autoplay
+    muted
+    loop
+    playsinline
+  ></video>
 
   <!-- Gradient overlay -->
   <div class="hero-overlay" aria-hidden="true"></div>
+
+  <!-- Play button (center) -->
+  <button class="play-btn" id="playBtn" aria-label="Play video">
+    <span class="play-circle">
+      <span class="play-triangle" aria-hidden="true"></span>
+    </span>
+  </button>
 
   <!-- Mute / unmute button (bottom-right) -->
   <button class="mute-btn" id="muteBtn" aria-label="Unmute video" aria-pressed="true">
@@ -74,6 +80,45 @@
     #3a3128 0, #3a3128 13px,
     #423930 13px, #423930 26px
   );
+}
+
+/* ── Play button ── */
+.play-btn {
+  position: absolute;
+  top: 46%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 6;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--paper);
+}
+
+.play-circle {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  border: 1px solid rgba(244, 239, 230, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(2px);
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.play-btn:hover .play-circle {
+  border-color: rgba(244, 239, 230, 0.85);
+  background: rgba(244, 239, 230, 0.08);
+}
+
+.play-triangle {
+  width: 0;
+  height: 0;
+  border-left: 20px solid var(--paper);
+  border-top: 12px solid transparent;
+  border-bottom: 12px solid transparent;
+  margin-left: 5px;
 }
 
 /* ── Video ── */
